@@ -1,0 +1,160 @@
+
+\documentclass[journal]{IEEEtran}
+%\usepackage{lineno}
+%\linenumbers
+%\usepackage{cite}
+\usepackage{comment}
+\ifCLASSINFOpdf
+  \usepackage[pdftex]{graphicx}
+  \graphicspath{pics/}
+  \DeclareGraphicsExtensions{.pdf,.jpeg,.png,.jpg}
+\else
+
+\fi
+\usepackage{amsmath}
+\usepackage{siunitx}
+\hyphenation{}
+
+
+\begin{document}
+\title{22051 - Assignment number 1}
+\author{Group 3 - s194048 Erik Rame, s194051 Jakob Bernhardt, s194006 Steffan Kunoy, s186083 Tjark Petersen}
+%\markboth{Project description}%
+%{}
+
+
+% make the title area
+\maketitle
+
+%\IEEEpeerreviewmaketitle
+
+\section{Summary and objectives}
+The goal with these reports is to provide a situation where specific tasks need to be solved as a team and where results are documented in a professional and concise way. In addition, the contents of the hands-on will provide you with an idea of where you stand in the course relative to the learning objectives. While it might be hard in the beginning, documentation of results will play an increasing role in your career. Please follow below guidelines when preparing your report.
+
+\subsection{Example text} 
+The convolution operation plays an important role in signal processing. Knowing the impulse response of a linear, time-invariant system, the system output can be computed by convolution of an arbitrary input signal with the systems impulse resposne. The convolution theorem translates this operationn to the frequncy domain.
+The first part of the report describes the filtering of a delicious chocolate cake through a infinite impulse response (IIR) filter, resulting in another declicious vanilla cake. The second part describes a running beer filter as a prototype for finite impulse response (FIR) filters. The characterization of the filter is described, along with the results of some arbitrary test signals.
+The results show that you can also have fun at later stages of your academic career, and that it is actually tough to condense the information to its essentials when you only have 4 pages to fill including pictures.
+
+\section{Methods}
+Describe your methods here. Describe how you tackle the problem and why you think it is a good idea to do it exactly this way. Avoid lengthy repetition of the content of the book and restrict yourself to the most essentual information. Provide all the information required to reproduce your results one to one.
+
+The optimal number of bicycles to have is given by eq. \ref{eq:bikes}
+\begin{equation}\label{eq:bikes}
+ N_b = n + 1 \qquad \mbox{constrained by:} \ \ N_b < s
+\end{equation}
+
+where $N_b$ refers to the optimal number of bicycles, $n$ to the number of bicycles you have at the moment, and $s$ the number of bicycles where your spouse will kick you out.
+
+
+\subsection{Figures}
+Prepare your figures such that they fit in width within one column, that the lines are visible and that all fonts are readable. As a guideline, the font size in the figures should be at least the size of the running text. Reduce the number of figures to a minimum. If you have a lot of information, provide panels and label each panel with a capital letter in the top left corner (i.e., A, B, C, ...). Refer to all figures in the running text.  
+
+\subsection{Figure captions}
+Please provide figure captions where you describe the main contents of the corresponding figure. This might look as in figure \ref{fig:eyes}:
+\begin{figure}
+ \includegraphics[width=\columnwidth]{eyes}
+ \caption{These are eyes of some insect species. There are two of them, located on the left and on the right hand side. They look weird - and they will observe you if you do not follow the rules.}
+ \label{fig:eyes}
+\end{figure}
+
+\subsection{Example text} 
+The convolution operation plays an important role in signal processing. Knowing the impulse response of a linear, time-invariant system, the system output can be computed by convolution of an arbitrary input signal with the systems impulse resposne. The convolution theorem translates this operationn to the frequncy domain.
+The first part of the report describes the filtering of a delicious chocolate cake through a infinite impulse response (IIR) filter, resulting in another declicious vanilla cake. The second part describes a running beer filter as a prototype for finite impulse response (FIR) filters. The characterization of the filter is described, along with the results of some arbitrary test signals.
+The results show that you can also have fun at later stages of your academic career, and that it is actually tough to condense the information to its essentials when you only have 4 pages to fill including pictures.
+
+\section{Methods}
+Describe your methods here. Describe how you tackle the problem and why you think it is a good idea to do it exactly this way. Avoid lengthy repetition of the content of the book and restrict yourself to the most essentual information. Provide all the information required to reproduce your results one to one.
+
+The optimal number of bicycles to have is given by eq. \ref{eq:bikes}
+\begin{equation}\label{eq:bikes}
+ N_b = n + 1 \qquad \mbox{constrained by:} \ \ N_b < s
+\end{equation}
+
+where $N_b$ refers to the optimal number of bicycles, $n$ to the number of bicycles you have at the moment, and $s$ the number of bicycles where your spouse will kick you out.
+
+
+\subsection{Figures}
+Prepare your figures such that they fit in width within one column, that the lines are visible and that all fonts are readable. As a guideline, the font size in the figures should be at least the size of the running text. Reduce the number of figures to a minimum. If you have a lot of information, provide panels and label each panel with a capital letter in the top left corner (i.e., A, B, C, ...). Refer to all figures in the running text. 
+\clearpage
+\newpage
+\section{Simple filters with poles and zeros}
+The objective of this exercise was to gain experience operating in the \textit{z}-domain by 
+
+\clearpage
+\newpage
+
+\section{Room model using sound reflections}
+
+In this section two system models for the acoustic behavior of a room are examined. Both models try to capture the reflection of sound waves of the rooms walls. The first model achieves this using a single reflection after a certain delay, resulting in a FIR filter. The other model uses feedback to create a never ending series of increasingly attenuated reflections, resulting in an IIR filter.
+
+The FIR filter is described by the difference equation:
+\begin{equation}
+    y(n) = x(n) + \alpha x(n-delay)
+\end{equation}
+
+This can be transformed to the z-domain resulting in:
+ \begin{equation}
+     Y(z) = X(z) + \alpha X(z) z^{-delay}
+ \end{equation}
+ \begin{equation}
+     H_{FIR}(z) = \frac{z^{delay} + \alpha}{z^{delay}}
+\end{equation}
+
+The IIR filter on the other hand is described by the difference equation:
+\begin{equation}
+    y(n) + \alpha y(n-delay) = x(n)
+\end{equation}
+
+The z-domain transfer function can be determined to be:
+\begin{equation}
+    Y(z) + \alpha Y(z) z^{-delay} = X(z)
+\end{equation}
+\begin{equation}
+    H_{IIR}(z) = \frac{z^{delay}}{z^{delay} + \alpha}
+\end{equation}
+
+We can see that the transfer functions of the two models are actually the inverse of each other. The FIR filter has $delay$ zeros spread evenly around the unit circle and a pole at the origin with a multiplicity of $delay$ and vice versa for the IIR model.
+
+The inverse nature of the two models also becomes apparent in their spectra. Figure \ref{fig:bounce:spectra} shows a small section of the very densely packed spectra of two FIR and IIR implementations using a time delay of $\SI{10}{ms}$ and $\SI{200}{ms}$ resulting,  at a sampling frequency of $\SI{44.1}{kHz}$, in delays of 441 and 8820 samples, respectively. Both use a value of 0.6 for $\alpha$. It can be observed that the spectra are periodic and that the period is determined by the time delay of the implementation.
+
+When studying the impulse responses (see figure \ref{fig:bounce:impulse}) the similarities between the two models vanish but we can see the expected behavior: The FIR filter repeats the input signal slightly attenuated once after a certain number of samples whereas the IIR reflects an increasingly attenuated version of the input signal indefinitely.
+
+The effect of the two filter models on a signal can be studied in figure \ref{fig:bounce:signals}. The reflected versions of the signal add to the original signal and make it harder to identify it. This translates to the original signal being harder to hear when listening to the filtered version. The longer the time delay, the larger the number of different reflections that add to the original signal in a small time interval and the original signal gets even less identifiable. Since the IIR filter produces a never ending series of reflection, it creates signals where the original signal is hardest to identify.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{assignment_01/fig/bounce_spectra.png}
+    \caption{Part of the spectra for both room models with two different time delays.}
+    \label{fig:bounce:spectra}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{assignment_01/fig/bonuce_impulse.png}
+    \caption{Impulse responses for both room models with two different time delays.}
+    \label{fig:bounce:impulse}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{assignment_01/fig/bounce_signals.png}
+    \caption{Application of the two models on a signal for two different time delays.}
+    \label{fig:bounce:signals}
+\end{figure}
+
+\clearpage
+\newpage
+
+
+
+\section{Results}
+Describe the results you obtained. Make sure you mention all the correct points and refer to the figures you produced.
+
+\section{Discussion}
+Provide some more general comments putting the specific points you found out in the single parts into a bigger context and how they connect to the rest of the conbtants of the course.
+
+
+
+
+\end{document}
+
+
