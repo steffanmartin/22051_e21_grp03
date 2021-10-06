@@ -22,8 +22,8 @@ plot(w/pi,20*log10(abs(h)))
 ax = gca;
 ax.XTick = 0:.1:2;
 ax.XLim = [0 2];
-xlabel('Frequency (normalized) / (\pi rad/sample)')
-ylabel('Magnitude (normalized) / (dB)')
+xlabel('Normalized Frequency (\times \pi rad/sample)')
+ylabel('Magnitude (dB)')
 
 end
 
