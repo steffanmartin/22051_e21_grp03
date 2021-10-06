@@ -58,28 +58,40 @@ Please provide figure captions where you describe the main contents of the corre
  \label{fig:eyes}
 \end{figure}
 
-\subsection{Example text} 
-The convolution operation plays an important role in signal processing. Knowing the impulse response of a linear, time-invariant system, the system output can be computed by convolution of an arbitrary input signal with the systems impulse resposne. The convolution theorem translates this operationn to the frequncy domain.
-The first part of the report describes the filtering of a delicious chocolate cake through a infinite impulse response (IIR) filter, resulting in another declicious vanilla cake. The second part describes a running beer filter as a prototype for finite impulse response (FIR) filters. The characterization of the filter is described, along with the results of some arbitrary test signals.
-The results show that you can also have fun at later stages of your academic career, and that it is actually tough to condense the information to its essentials when you only have 4 pages to fill including pictures.
 
-\section{Methods}
-Describe your methods here. Describe how you tackle the problem and why you think it is a good idea to do it exactly this way. Avoid lengthy repetition of the content of the book and restrict yourself to the most essentual information. Provide all the information required to reproduce your results one to one.
-
-The optimal number of bicycles to have is given by eq. \ref{eq:bikes}
-\begin{equation}\label{eq:bikes}
- N_b = n + 1 \qquad \mbox{constrained by:} \ \ N_b < s
-\end{equation}
-
-where $N_b$ refers to the optimal number of bicycles, $n$ to the number of bicycles you have at the moment, and $s$ the number of bicycles where your spouse will kick you out.
-
-
-\subsection{Figures}
-Prepare your figures such that they fit in width within one column, that the lines are visible and that all fonts are readable. As a guideline, the font size in the figures should be at least the size of the running text. Reduce the number of figures to a minimum. If you have a lot of information, provide panels and label each panel with a capital letter in the top left corner (i.e., A, B, C, ...). Refer to all figures in the running text. 
-\clearpage
 \newpage
 \section{Simple filters with poles and zeros}
-The objective of this exercise was to gain experience operating in the \textit{z}-domain by 
+The objective of this exercise was to gain experience working with the \textit{z}-transform by manipulating the poles and zeros of filters and transfer functions. In particular, the tasks highlighted how the placement of poles and zeros on the unit circle dictated the characteristic frequency response of for example a running-sum or a high-pass filter. Further, we tried passing different types of signals through the filters to study the effect they had on them. 
+
+\subsection{The z-transform}
+Generally, the \textit{z}-transform of a discrete-time signal $x(n)$ into the complex \textit{z}-plane is given by the \textit{bilateral} forward transform: 
+\begin{equation}
+\label{eqn:z_transform}
+    X(z) = \sum_{n=-\infty}^{\infty} x(n) \cdot z^{-n}
+\end{equation}
+However, since our signals are assumed to be causal, the \textit{unilateral} transform starting at $n=0$ is used. For instance, the \textit{z}-transform of a third order running sum filter $h(n)$, which is simply a summation of 4 terms: 
+\begin{equation}
+\label{eqn:third_order_rs}
+    H(z) = \sum_{n=0}^{\infty} h(n) \cdot z^{-n} = z^{0} + z^{-1} + z^{-2} + z^{-3} 
+\end{equation}
+As the \textit{z}-transform can be seen as a generalized case of the Fourier transform, the result can easily be mapped to the frequency domain using $z \rightarrow e^{j \omega}$.
+
+\subsection{Poles and zeros}
+Using algebraic manipulation, we can express the \textit{z}-transform of the third order running sum filter in (\ref{eqn:third_order_rs}) as a ratio of polynomials: 
+\begin{equation}
+\label{eqn:third_order_rs_tf}
+    H(z) = \frac{z^3+z^2+z^1+1}{z^3}
+\end{equation}
+The roots of the denominator and numerator polynomials, known as poles and zeros respectively, dictate the frequency response of an LTI-system with $H(z)$ as its transfer function. Thus, the third order running sum filter is seen to have a triple pole at $z=0$ and zeros at $z=-1$ and $z=\pm i$, as illustrated in the \textit{z}-plane plot in Figure \_. Poles cause the transfer function value to go to infinity, while zeros cause it to go to zero. As a result, the frequency response of the filter, shown in Figure \_, is heavily attenuated at the normalized frequencies $\frac{\pi}{2}, \pi \text{ and } \frac{3 \pi}{2}$, corresponding to the arguments of each of the three zeros. Likewise, the frequency response of the fifth order running sum filter in Figure \_ is also affected by its pole-zero locations shown in Figure \_. 
+
+\subsection{Filtering} 
+As seen in the previous section, we can control the frequency response of an LTI-system simply by placing its poles and zeros at appropriate locations on the \textit{z}-plane. Placing a single real zero at some distance $0<r<1$ from the origin and no poles creates a \textbf{low-pass} filter, while placing a single pole at the same distance without any zeros yields a \textbf{high-pass} filter. Placing an equal number of poles and zeros at the exact same locations meanwhile produces an \textbf{all-pass} filter. \\
+Passing a signal through these filters requires convolution in the time domain, or simply multiplication in the \textit{z}-domain. Figure \_ shows the result of filtering a sinusoid with a low-pass, high-pass and all-pass filter. From this time-domain plot we can see that the low-pass filter attenuates the signal amplitude by a factor of $0.5$ while the high-pass filter amplifies it by a factor of 2. As expected, the all-pass filter has no effect on the signal amplitude. 
+
+\subsection{Audio processing}
+The synthesized filters can also be used on more complex signals, such as a sound signal. An example is shown in Figure \_, where a 5 ms sound clip has been passed through all filter types. 
+
+\subsection{Plots}
 
 \clearpage
 \newpage
