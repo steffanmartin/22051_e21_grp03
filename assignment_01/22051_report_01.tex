@@ -13,6 +13,7 @@
 \fi
 \usepackage{amsmath}
 \usepackage{siunitx}
+\usepackage{comment}
 \usepackage[caption=false]{subfig}
 \usepackage[super]{nth}
 \hyphenation{}
@@ -84,7 +85,7 @@ Using algebraic manipulation, we can express the \textit{z}-transform of the \nt
 \label{eqn:third_order_rs_tf}
     H(z) = \frac{z^3+z^2+z^1+1}{z^3}
 \end{equation}
-The roots of the denominator and numerator polynomials, known as poles and zeros respectively, dictate the frequency response of an LTI-system with $H(z)$ as its transfer function. Thus, the third order running sum filter is seen to have a triple pole at $z=0$ and zeros at $z=-1$ and $z=\pm i$, as illustrated in the \textit{z}-plane plot in Figure \ref{fig:zplane_a}. Poles cause the transfer function value to go to infinity, while zeros cause it to go to zero. As a result, the frequency response of the filter, shown in Figure \ref{fig:freq_resp_a}, is heavily attenuated at the normalized frequencies $\frac{\pi}{2}, \pi \text{ and } \frac{3 \pi}{2}$, corresponding to the arguments of each of the three zeros. Likewise, the frequency response of the \nth{5} order running sum filter in Figure \ref{fig:freq_resp_b} is also affected by its pole-zero locations shown in Figure \ref{fig:zplane_b}. 
+The roots of the denominator and numerator polynomials, known as poles and zeros respectively, dictate the frequency response of an LTI-system with $H(z)$ as its transfer function. Thus, the third order running sum filter is seen to have a triple pole at $z=0$ and zeros at $z=-1$ and $z=\pm i$, as illustrated in the \textit{z}-plane plot in Figure \ref{fig:zplane_a}. Poles cause the transfer function value to go to infinity, while zeros cause it to go to zero. As a result, the frequency response of the filter, shown in Figure \ref{fig:freq_resp1_a}, is heavily attenuated at the normalized frequencies $\frac{\pi}{2}, \pi \text{ and } \frac{3 \pi}{2}$, corresponding to the arguments of each of the three zeros. Likewise, the frequency response of the \nth{5} order running sum filter in Figure \ref{fig:freq_resp1_b} is also affected by its pole-zero locations shown in Figure \ref{fig:zplane_b}. 
 
 \subsection{Filtering} 
 As seen in the previous section, we can control the frequency response of an LTI-system simply by placing its poles and zeros at appropriate locations on the \textit{z}-plane. Placing a single real zero at some distance $0<r<1$ from the origin and no poles creates a \textbf{low-pass} filter, while placing a single pole at the same distance without any zeros yields a \textbf{high-pass} filter. Placing an equal number of poles and zeros at the exact same locations meanwhile produces an \textbf{all-pass} filter. \\
@@ -122,20 +123,22 @@ The synthesized filters can also be used on more complex signals, such as a soun
     \caption{Frequency response of two running sum filters plotted on the normalized-frequency axis.}
     \label{fig:freq_resp1}
 \end{figure}
+\begin{comment}
 \begin{figure}[h]
     \centering
     \captionsetup[subfloat]{farskip=0pt,captionskip=0pt}
     \subfloat[\nth{3} order moving average]{
-        \includegraphics[width=0.5\columnwidth]{3rd}
+        \includegraphics[width=0.5\columnwidth]{assignment_01/plots/3rd_order_moving_average_freq_resp.png}
         \label{fig:freq_resp2_a}
     }
     \subfloat[\nth{5} order moving average]{
-        \includegraphics[width=0.5\columnwidth]{assignment_01/plots/5th_order_running_sum_freq_resp.png}
+        \includegraphics[width=0.5\columnwidth]{assignment_01/plots/5th_order_moving_average_freq_resp.png}
         \label{fig:freq_resp2_b}
     }
-    \caption{Frequency response of two running sum filters plotted on the normalized-frequency axis.}
+    \caption{Frequency response of two moving average filters plotted on the normalized-frequency axis.}
     \label{fig:freq_resp2}
 \end{figure}
+\end{comment}
 
 \newpage
 
@@ -216,7 +219,7 @@ To analyze the composition of a recorded signal, it is often more practical to e
 \newline
 \textit{\textbf{Show equations for discrete fourier and inverse fourier?}}
 \newline
-Hands-on 3 exercise 1.3 dealt with the Fourier transform of a recorded signal. The sound of a piano playing a single note 'piano.wav' was loaded into MATLAB. The time signal 'piano.wav' is made up of many frequency components, and the Fourier transformation is a sort of projection of the signal onto the frequencies. As a result, we can see how much of each frequency is contained within the signal. 
+Hands-on 3 exercise 1.3 dealt with the Fourier transform of a recorded signal. The sound sample of a piano playing a single note 'piano.wav' was loaded into MATLAB. The discrete time signal 'piano.wav' is made up of many frequency components, and the Fourier transformation is a sort of decomposition of the signal into its frequencies. As a result, we can see how much of each frequency is contained within the signal.
 
 
 \subsection{Signal plots and Fourier transform}
@@ -232,11 +235,12 @@ In order to learn about the composition of the sound signal, the signal was plot
 \begin{figure} [h]
     \centering
     \includegraphics[width=\linewidth]{assignment_01/plots/freq_plot.png}
-    \caption{Recorded signal in the frequency-domain. Only positive frequencies, including the DC component, are shown; specifically 0 to 2500 Hz.}
+    \caption{Power spectrum of recorded signal. Only positive frequencies, including the DC component, are shown; specifically 0 to 2500 Hz.}
     \label{fig:freq}
 \end{figure}
 
-We use discrete Fourier transform to get the spectrum of the whole signal in MATLAB. It is important to note, that MATLABs fft function returns the positive values of the signal spectrum first. The spectrum of the whole signal is plotted with \textit{Hz} and \textit{dB} on the x- and y-axis respectively. To plot only the positive frequencies, including the DC component, we create new frequency and signal vectors, only containing values for the positive frequencies. The resulting plot is shown in figure \ref{fig:freq}.
+We use discrete Fourier transform to get the spectrum of the whole signal in MATLAB. It is important to note, that MATLABs fft function returns the positive values of the signal spectrum first. The spectrum of the whole signal is plotted with \textit{Hz} and \textit{dB} on the x- and y-axis respectively. % should we show this plot?
+To plot only the positive frequencies, including the DC component, we create new frequency and signal vectors, only containing values for the positive frequencies. The resulting plot is shown in figure \ref{fig:freq}.
 
 \textbf{\textit{(Describe how the frequency vector is made (intervals, start and end-points)?)}}
 
@@ -247,11 +251,19 @@ We see that the lowest peak is found at 130.43 Hz and therefore, with a precisio
     f_0 = 130.5 Hz.
 \end{equation}
 
-The fundamental frequency is what we perceive as the musical pitch of a tone. 130.5 Hz roughly correlates with the fundamental of C3 on a piano, which sounds very similar to the tone played in 'piano.wav'. The other peaks in the spectrum represent the harmonics of the signal. 
+The fundamental frequency is what we perceive as the musical pitch of a tone. 130.5 Hz roughly correlates with the fundamental of C3 on a piano, which sounds very similar to the tone played in 'piano.wav'. The other peaks in the spectrum represent the harmonics of the tone. 
 
 \subsection{Synthesis and inverse Fourier transform}
-\textit{Explain synthesis and why we use inverse Fourier and what is does.}
+Using the distribution of harmonics from the power spectrum, we can synthesize the sound of a piano. 
+% "we synthesize the signal with a length of 2 s in the frequency domain by approximating it via a harmonic series: ..."
+\textbf{\textit{explain synthesis and why we use inverse Fourier and what is does...}}
+\newline
+\textit{Plot...}
+\newline
+For the synthesized signal to sound like a realistic piano, the harmonics of the signal have to have the right distribution and amplitude in relation to each other. Otherwise, the result might as well sound like another instrument. 
 
+
+% compare the synthesized signal, how does it compare - especially in the power spectrum - if the harmonics are different/have different magnitudes, we would expect the human ear to notice a difference - wouldnt sound like piano without power in the higher harmonics
 % see rubrics on learn
 
 % "magnitude spectrum"
