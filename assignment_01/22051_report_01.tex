@@ -13,29 +13,24 @@
 \fi
 \usepackage{amsmath}
 \usepackage{siunitx}
+\usepackage{geometry}
 \usepackage{comment}
 \usepackage{float}
 \usepackage[caption=false]{subfig}
 \usepackage[super]{nth}
 \hyphenation{}
 
-
 \begin{document}
+\newgeometry{top=12mm, bottom=12mm, left=12mm, right=12mm}
 \title{22051 - Assignment number 1}
-\author{\underline{Group 3} - s194048 Erik Rame (\_ hrs), s194051 Jakob Bernhardt (\_ hrs), s194006 Steffan Kunoy (\_ hrs), s186083 Tjark Petersen (7 hrs)}
-%\markboth{Project description}%
-%{}
-
+\author{\vspace{-2mm}{\normalsize \underline{Group 3} - s194048 Erik Rame (\_ hrs), s194051 Jakob Bernhardt (\_ hrs), s194006 Steffan Kunoy (8 hrs), \\s186083 Tjark Petersen (7 hrs)}\vspace{-10mm}}
 
 % make the title area
 \maketitle
-
 %\IEEEpeerreviewmaketitle
-
 
 \section{Simple filters with poles and zeros}
 The objective of this exercise was to gain experience working with the \textit{z}-transform and filters. In particular, the tasks highlighted how the placement of poles and zeros on the unit circle dictated the characteristic frequency response of for example a running-sum or a high-pass filter.
-
 \subsection{The z-transform}
 Generally, the \textit{z}-transform of a discrete-time signal $x(n)$ into the complex \textit{z}-plane is given by the \textit{bilateral} forward transform: 
 \begin{equation}
@@ -47,51 +42,44 @@ However, since our signals are assumed to be causal, the \textit{unilateral} tra
 \label{eqn:third_order_rs}
     H(z) = \sum_{n=0}^{\infty} h(n) \cdot z^{-n} = z^{0} + z^{-1} + z^{-2} + z^{-3} 
 \end{equation}
-%As the \textit{z}-transform can be seen as a generalized case of the Fourier transform, the result can easily be mapped to the frequency domain using $z \rightarrow e^{j \omega}$.
 
 \subsection{Poles and zeros}
 Using algebraic manipulation, we can express (\ref{eqn:third_order_rs}) as a ratio of polynomials:  
-%the \textit{z}-transform of the \nth{3} order running sum filter in (\ref{eqn:third_order_rs}) as a ratio of polynomials: 
 \begin{equation}
 \label{eqn:third_order_rs_tf}
     H(z) = \frac{z^3+z^2+z^1+1}{z^3}
 \end{equation}
 The roots of the denominator and numerator polynomials, known as poles and zeros respectively, dictate the frequency response of an \nth{3} order running sum filter with $H(z)$ as its transfer function. \\
 A normalized frequency can be mapped to a point on the unit circle by $z \rightarrow e^{j \omega}$. The magnitude response at this frequency is then given as a ratio of products of the distances to each zero and pole respectively. Thus, as the frequency approaches a zero on the unit circle, a distance in the numerator goes to zero, causing attenuation in the magnitude response at this frequency. Likewise, if the frequency hits a pole, a distance in the denominator becomes zero, causing amplification in the magnitude response at this frequency. \\
-We can observe this phenomenon for the poles and zeros of the \nth{3} order running sum filter, which are plotted on the complex \textit{z}-plane in Figure \ref{fig:zplane_a}. Its frequency response, shown in Figure \ref{fig:freq_resp1_a}, is heavily attenuated at the normalized frequencies $\frac{\pi}{2}, \pi \text{ and } \frac{3 \pi}{2}$, corresponding to the arguments of each of its three zeros. The triple pole at the origin does not affect the frequency response as its distance is always constant. Likewise, the frequency response of the \nth{5} order running sum filter in Figure \ref{fig:freq_resp1_b} is also affected by its pole-zero locations shown in Figure \ref{fig:zplane_b}. 
-
-%Thus, the third order running sum filter is seen to have a triple pole at $z=0$ and zeros at $z=-1$ and $z=\pm i$, as illustrated in the \textit{z}-plane plot in Figure \ref{fig:zplane_a}. Poles cause the transfer function value to go to infinity, while zeros cause it to go to zero. As a result, the frequency response of the filter, shown in Figure \ref{fig:freq_resp1_a}, is heavily attenuated at the normalized frequencies $\frac{\pi}{2}, \pi \text{ and } \frac{3 \pi}{2}$, corresponding to the arguments of each of the three zeros. Likewise, the frequency response of the \nth{5} order running sum filter in Figure \ref{fig:freq_resp1_b} is also affected by its pole-zero locations shown in Figure \ref{fig:zplane_b}. 
 \begin{figure}[H]
     \centering
     \captionsetup[subfloat]{farskip=0pt,captionskip=0pt}
     \subfloat[\nth{3} order running sum]{
-        \includegraphics[width=0.5\columnwidth]{assignment_01/plots/3rd_order_running_sum_z_plane.png}
+        \includegraphics[width=0.45\columnwidth]{assignment_01/plots/3rd_order_running_sum_z_plane.png}
         \label{fig:zplane_a}
     }
     \subfloat[\nth{5} order running sum]{
-        \includegraphics[width=0.5\columnwidth]{assignment_01/plots/5th_order_running_sum_z_plane.png}
+        \includegraphics[width=0.45\columnwidth]{assignment_01/plots/5th_order_running_sum_z_plane.png}
         \label{fig:zplane_b}
     }
     \caption{Placement of filter poles and zeros on the complex \textit{z}-plane.}
     \label{fig:zplane}
 \end{figure}
-\begin{comment}
+We can observe this phenomenon for the poles and zeros of the \nth{3} order running sum filter, which are plotted on the complex \textit{z}-plane in Figure \ref{fig:zplane_a}. Its frequency response, shown in Figure \ref{fig:freq_resp1_a}, is heavily attenuated at the normalized frequencies $\frac{\pi}{2}, \pi \text{ and } \frac{3 \pi}{2}$, corresponding to the arguments of each of its three zeros. The triple pole at the origin does not affect the frequency response as its distance is always constant. Likewise, the frequency response of the \nth{5} order running sum filter in Figure \ref{fig:freq_resp1_b} is also affected by its pole-zero locations shown in Figure \ref{fig:zplane_b}. 
 \begin{figure}[H]
     \centering
     \captionsetup[subfloat]{farskip=0pt,captionskip=0pt}
     \subfloat[\nth{3} order running sum]{
-        \includegraphics[width=0.5\columnwidth]{assignment_01/plots/3rd_order_running_sum_freq_resp.png}
+        \includegraphics[width=0.45\columnwidth]{assignment_01/plots/3rd_order_running_sum_freq_resp.png}
         \label{fig:freq_resp1_a}
     }
     \subfloat[\nth{5} order running sum]{
-        \includegraphics[width=0.5\columnwidth]{assignment_01/plots/5th_order_running_sum_freq_resp.png}
+        \includegraphics[width=0.45\columnwidth]{assignment_01/plots/5th_order_running_sum_freq_resp.png}
         \label{fig:freq_resp1_b}
     }
     \caption{Frequency response of two running sum filters plotted on the normalized-frequency axis.}
     \label{fig:freq_resp1}
 \end{figure}
-\end{comment}
-
 
 \subsection{Filtering} 
 As seen in the previous section, we can control the frequency response of an LTI-system simply by placing its poles and zeros at appropriate locations on the \textit{z}-plane. Placing a single real zero at some distance \textit{r} in the LHP and no poles creates a \textbf{low-pass} filter, while placing a single zero at the same distance in the RHP with no poles yields a \textbf{high-pass} filter. Placing an equal number of poles and zeros at the exact same locations meanwhile produces an \textbf{all-pass} filter. The value of \textit{r} determines the level of attenuation for zeros or amplification for poles, with $r=1$ constituting the maximum and $r=0$ having no effect on magnitude.\\
@@ -103,27 +91,7 @@ Passing a signal through these filters requires convolution in the time domain, 
     \label{fig:filtered_sound}
 \end{figure}
 From this time-domain plot we can see that the low-pass filter amplifies the signal amplitude while the high-pass filter attenuates it. This is due to the high sampling rate which "pushes" the frequency spectrum into the passband of the low-pass filter and the stopband of the high-pass filter. when compared with the frequency spectrum. As expected, the all-pass filter has no effect on the signal amplitude. 
-
-\begin{comment}
-\subsection{Plots}
-\begin{figure}[H]
-    \centering
-    \captionsetup[subfloat]{farskip=0pt,captionskip=0pt}
-    \subfloat[\nth{3} order moving average]{
-        \includegraphics[width=0.5\columnwidth]{assignment_01/plots/3rd_order_moving_average_freq_resp.png}
-        \label{fig:freq_resp2_a}
-    }
-    \subfloat[\nth{5} order moving average]{
-        \includegraphics[width=0.5\columnwidth]{assignment_01/plots/5th_order_moving_average_freq_resp.png}
-        \label{fig:freq_resp2_b}
-    }
-    \caption{Frequency response of two moving average filters plotted on the normalized-frequency axis.}
-    \label{fig:freq_resp2}
-\end{figure}
-\end{comment}
-
-
-
+\clearpage
 
 \section{Room model using sound reflections}
 
@@ -246,6 +214,11 @@ When we listen to
 % do we see that one is superior compared to the other? - judge based on power spectrum and the sound of the signal itself
 % see rubrics on learn
 % spectral resolution is dependent on signal length in time
+
+\newpage
+\subsection{Signal plots and Fourier transform}
+% describe the methods used, and explain why you choose your specific approach! restrict yourself to the most essential information. provide all information necessary to reproduce your results
+
 
 \end{document}
 
