@@ -21,7 +21,7 @@
 
 \begin{document}
 \title{22051 - Assignment number 1}
-\author{\underline{Group 3}\\ s194048 Erik Rame (\_ hrs) \\ s194051 Jakob Bernhardt (\_ hrs) \\ s194006 Steffan Kunoy (\_ hrs) \\ s186083 Tjark Petersen (\_ hrs)}
+\author{\underline{Group 3} - s194048 Erik Rame (\_ hrs), s194051 Jakob Bernhardt (\_ hrs), s194006 Steffan Kunoy (\_ hrs), s186083 Tjark Petersen (7 hrs)}
 %\markboth{Project description}%
 %{}
 
@@ -31,38 +31,7 @@
 
 %\IEEEpeerreviewmaketitle
 
-\section{Summary and objectives}
-The goal with these reports is to provide a situation where specific tasks need to be solved as a team and where results are documented in a professional and concise way. In addition, the contents of the hands-on will provide you with an idea of where you stand in the course relative to the learning objectives. While it might be hard in the beginning, documentation of results will play an increasing role in your career. Please follow below guidelines when preparing your report.
 
-\subsection{Example text} 
-The convolution operation plays an important role in signal processing. Knowing the impulse response of a linear, time-invariant system, the system output can be computed by convolution of an arbitrary input signal with the systems impulse resposne. The convolution theorem translates this operationn to the frequncy domain.
-The first part of the report describes the filtering of a delicious chocolate cake through a infinite impulse response (IIR) filter, resulting in another declicious vanilla cake. The second part describes a running beer filter as a prototype for finite impulse response (FIR) filters. The characterization of the filter is described, along with the results of some arbitrary test signals.
-The results show that you can also have fun at later stages of your academic career, and that it is actually tough to condense the information to its essentials when you only have 4 pages to fill including pictures.
-
-\section{Methods}
-Describe your methods here. Describe how you tackle the problem and why you think it is a good idea to do it exactly this way. Avoid lengthy repetition of the content of the book and restrict yourself to the most essentual information. Provide all the information required to reproduce your results one to one.
-
-The optimal number of bicycles to have is given by eq. \ref{eq:bikes}
-\begin{equation}\label{eq:bikes}
- N_b = n + 1 \qquad \mbox{constrained by:} \ \ N_b < s
-\end{equation}
-
-where $N_b$ refers to the optimal number of bicycles, $n$ to the number of bicycles you have at the moment, and $s$ the number of bicycles where your spouse will kick you out.
-
-
-\subsection{Figures}
-Prepare your figures such that they fit in width within one column, that the lines are visible and that all fonts are readable. As a guideline, the font size in the figures should be at least the size of the running text. Reduce the number of figures to a minimum. If you have a lot of information, provide panels and label each panel with a capital letter in the top left corner (i.e., A, B, C, ...). Refer to all figures in the running text.  
-
-\subsection{Figure captions}
-Please provide figure captions where you describe the main contents of the corresponding figure. This might look as in figure \ref{fig:eyes}:
-\begin{figure}
- \includegraphics[width=\columnwidth]{eyes}
- \caption{These are eyes of some insect species. There are two of them, located on the left and on the right hand side. They look weird - and they will observe you if you do not follow the rules.}
- \label{fig:eyes}
-\end{figure}
-
-
-\newpage
 \section{Simple filters with poles and zeros}
 The objective of this exercise was to gain experience working with the \textit{z}-transform by manipulating the poles and zeros of filters and transfer functions. In particular, the tasks highlighted how the placement of poles and zeros on the unit circle dictated the characteristic frequency response of for example a running-sum or a high-pass filter. Further, we tried passing different types of signals through the filters to study the effect they had on them. 
 
@@ -77,7 +46,7 @@ However, since our signals are assumed to be causal, the \textit{unilateral} tra
 \label{eqn:third_order_rs}
     H(z) = \sum_{n=0}^{\infty} h(n) \cdot z^{-n} = z^{0} + z^{-1} + z^{-2} + z^{-3} 
 \end{equation}
-As the \textit{z}-transform can be seen as a generalized case of the Fourier transform, the result can easily be mapped to the frequency domain using $z \rightarrow e^{j \omega}$.
+%As the \textit{z}-transform can be seen as a generalized case of the Fourier transform, the result can easily be mapped to the frequency domain using $z \rightarrow e^{j \omega}$.
 
 \subsection{Poles and zeros}
 Using algebraic manipulation, we can express the \textit{z}-transform of the \nth{3} order running sum filter in (\ref{eqn:third_order_rs}) as a ratio of polynomials: 
@@ -85,8 +54,11 @@ Using algebraic manipulation, we can express the \textit{z}-transform of the \nt
 \label{eqn:third_order_rs_tf}
     H(z) = \frac{z^3+z^2+z^1+1}{z^3}
 \end{equation}
-The roots of the denominator and numerator polynomials, known as poles and zeros respectively, dictate the frequency response of an LTI-system with $H(z)$ as its transfer function. %We can plot these poles and zeros on the complex \textit{z}-plane, as we have done for the third order running sum filter in Figure \ref{fig:zplane_a}. The magnitude response of the transfer function at a given frequency $\omega$ is then a ratio of products of distances from the specified frequency on the unit circle to each zero and pole respectively. Thus, as we approach a zero on the unit circle, the numerator of the magnitude response goes to zero, causing attenuation of that frequency. 
-Thus, the third order running sum filter is seen to have a triple pole at $z=0$ and zeros at $z=-1$ and $z=\pm i$, as illustrated in the \textit{z}-plane plot in Figure \ref{fig:zplane_a}. Poles cause the transfer function value to go to infinity, while zeros cause it to go to zero. As a result, the frequency response of the filter, shown in Figure \ref{fig:freq_resp1_a}, is heavily attenuated at the normalized frequencies $\frac{\pi}{2}, \pi \text{ and } \frac{3 \pi}{2}$, corresponding to the arguments of each of the three zeros. Likewise, the frequency response of the \nth{5} order running sum filter in Figure \ref{fig:freq_resp1_b} is also affected by its pole-zero locations shown in Figure \ref{fig:zplane_b}. 
+The roots of the denominator and numerator polynomials, known as poles and zeros respectively, dictate the frequency response of an LTI-system with $H(z)$ as its transfer function. A normalized frequency can be mapped to a point on the unit circle by $z \rightarrow e^{j \omega}$. The magnitude response at this frequency is then given as a ratio of products of the distances to each zero and pole respectively. Thus, as the frequency approaches a zero on the unit circle, a distance in the numerator goes to zero, causing attenuation in the magnitude response at this frequency. Likewise, if the frequency hits a pole, a distance in the denominator becomes zero, causing amplification in the magnitude response at this frequency. 
+
+We can observe this phenomenon for the poles and zeros of the \nth{3} order running sum filter, which are plotted on the complex \textit{z}-plane in Figure \ref{fig:zplane_a}. Its frequency response, shown in Figure \ref{fig:freq_resp1_a}, is heavily attenuated at the normalized frequencies $\frac{\pi}{2}, \pi \text{ and } \frac{3 \pi}{2}$, corresponding to the arguments of each of its three zeros. The triple pole at the origin does not affect the frequency response as its distance is always constant. Likewise, the frequency response of the \nth{5} order running sum filter in Figure \ref{fig:freq_resp1_b} is also affected by its pole-zero locations shown in Figure \ref{fig:zplane_b}. 
+
+%Thus, the third order running sum filter is seen to have a triple pole at $z=0$ and zeros at $z=-1$ and $z=\pm i$, as illustrated in the \textit{z}-plane plot in Figure \ref{fig:zplane_a}. Poles cause the transfer function value to go to infinity, while zeros cause it to go to zero. As a result, the frequency response of the filter, shown in Figure \ref{fig:freq_resp1_a}, is heavily attenuated at the normalized frequencies $\frac{\pi}{2}, \pi \text{ and } \frac{3 \pi}{2}$, corresponding to the arguments of each of the three zeros. Likewise, the frequency response of the \nth{5} order running sum filter in Figure \ref{fig:freq_resp1_b} is also affected by its pole-zero locations shown in Figure \ref{fig:zplane_b}. 
 
 \subsection{Filtering} 
 As seen in the previous section, we can control the frequency response of an LTI-system simply by placing its poles and zeros at appropriate locations on the \textit{z}-plane. Placing a single real zero at some distance $0<r<1$ from the origin and no poles creates a \textbf{low-pass} filter, while placing a single pole at the same distance without any zeros yields a \textbf{high-pass} filter. Placing an equal number of poles and zeros at the exact same locations meanwhile produces an \textbf{all-pass} filter. \\
@@ -146,7 +118,8 @@ Passing a signal through these filters requires convolution in the time domain, 
     \caption{Result of passing a sound signal through the different filter types.}
     \label{fig:filtered_sound}
 \end{figure}
-\newpage
+
+
 
 \section{Room model using sound reflections}
 
@@ -182,7 +155,7 @@ We can see that the transfer functions of the two models are actually the invers
 
 The inverse nature of the two models also becomes apparent in their spectra. Figure \ref{fig:bounce:spectra} shows a small section of the very densely packed spectra of the FIR and IIR implementations using a time delay of $\SI{30}{ms}$, resulting, at a sampling frequency of $\SI{44.1}{kHz}$, in a delay of 1323 samples. Both use a value of 0.6 for $\alpha$. It can be observed that the spectra are periodic and when studying the spectra with different time delays, that the period is determined by the time delay of the implementation.
 
-When studying the impulse responses (see figure \ref{fig:bounce:impulse}) the similarities between the two models vanish but we can see the expected behavior: The FIR filter repeats the input signal slightly attenuated once after a certain number of samples whereas the IIR reflects an increasingly attenuated version of the input signal indefinitely.
+When studying the impulse responses (see figure \ref{fig:bounce:impulse}) the similarities between the two models vanish but we can see the expected behavior: The FIR filter repeats the input signal slightly attenuated once after a certain number of samples whereas the IIR reflects an increasingly attenuated version of the input signal indefinitely. Longer delays result in the reflections occurring later in time.
 
 The effect of the two filter models on a signal can be studied in figure \ref{fig:bounce:signals}. The reflected versions of the signal add to the original signal and make it harder to identify. This translates to the original signal being harder to hear when listening to the filtered version. The longer the time delay, the larger the number of different reflections that add to the original signal in a small time interval and the original signal gets even less identifiable. Since the IIR filter produces a never ending series of reflection, it creates signals where the original signal is hardest to identify.
 
@@ -207,24 +180,10 @@ Listening to both filters, the IIR based filter clearly sounds more realistic an
     \label{fig:bounce:signals}
 \end{figure}
 
-\clearpage
-\newpage
 
-\section{Results}
-Describe the results you obtained. Make sure you mention all the correct points and refer to the figures you produced.
-
-\section{Discussion}
-Provide some more general comments putting the specific points you found out in the single parts into a bigger context and how they connect to the rest of the conbtants of the course.
-
-
-
-\clearpage
 \section{Fourier transform of a recorded signal (Hands-on 3)}
 % first have a section with a short explanation of fourier transform mathematically, then go into the details of the exercise and what the following sections describe/show/include and also the results 
 To analyze the composition of a recorded signal, it is often more practical to examine it in the frequency domain. To move from the time-domain into the frequency domain, we use Fourier transform. 
-\newline
-\textit{\textbf{Show equations for discrete fourier and inverse fourier?}}
-\newline
 Hands-on 3 exercise 1.3 dealt with the Fourier transform of a recorded signal. The sound sample of a piano playing a single note 'piano.wav' was loaded into MATLAB. The discrete time signal 'piano.wav' is made up of many frequency components, and the Fourier transformation is a sort of decomposition of the signal into its frequencies. As a result, we can see how much of each frequency is contained within the signal.
 
 
@@ -264,9 +223,7 @@ Using the known distribution of harmonics from the power spectrum, we can synthe
 \newline
 \textbf{\textit{write the harmonic series/code snippets of for loop? - insert plot of first synthesis}}
 \newline
-Figure # shows a comparison of the power spectrum of the real signal and the  that the synthesized signal has the...
-
-For the synthesized signal to sound like a realistic piano, the harmonics of the signal have to posses the right distribution \textit{and} amplitude in relation to each other. Otherwise, the result might as well sound like another instrument. 
+Figure xx shows a comparison of the power spectrum of the real signal and the additive synthesized signal. We see that the peaks in the synthesized signal are lined up properly with respect to frequency and magnitude. Therefore, we would expect the signal to sound like a realistic piano. 
 
 
 % compare the synthesized signal, how does it compare - especially in the power spectrum - if the harmonics are different/have different magnitudes, we would expect the human ear to notice a difference - wouldnt sound like piano without power in the higher harmonics
