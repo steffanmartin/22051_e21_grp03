@@ -3,7 +3,7 @@
 %\usepackage{lineno}
 %\linenumbers
 %\usepackage{cite}
-
+\usepackage{comment}
 \ifCLASSINFOpdf
   \usepackage[pdftex]{graphicx}
   \graphicspath{pics/}
@@ -11,61 +11,68 @@
 \else
 
 \fi
-
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{geometry}
+\usepackage{comment}
+\usepackage{float}
+\usepackage[caption=false]{subfig}
+\usepackage[super]{nth}
 \hyphenation{}
 
-
 \begin{document}
-\title{22051 - Assignment number NUMBER}
-\author{YOUR GROUP NUMBER, NAMES AND STU-NUMBERS}
-%\markboth{Project description}%
-%{}
-
+\newgeometry{top=12mm, bottom=12mm, left=12mm, right=12mm}
+\title{22051 - Assignment number 1}
+\author{\vspace{-2mm}{\normalsize \underline{Group 3} - s194048 Erik Rame (\_ hrs), s194051 Jakob Bernhardt (\_ hrs), s194006 Steffan Kunoy (\_ hrs), \\s186083 Tjark Petersen (\_ hrs)}\vspace{-10mm}}
 
 % make the title area
 \maketitle
-
 %\IEEEpeerreviewmaketitle
 
-\section{Summary and objectives}
-The goal with these reports is to provide a situation where specific tasks need to be solved as a team and where results are documented in a professional and concise way. In addition, the contents of the hands-on will provide you with an idea of where you stand in the course relative to the learning objectives. While it might be hard in the beginning, documentation of results will play an increasing role in your career. Please follow below guidelines when preparing your report.
+\section{How finite should it be?}
 
-\subsection{Example text} 
-The convolution operation plays an important role in signal processing. Knowing the impulse response of a linear, time-invariant system, the system output can be computed by convolution of an arbitrary input signal with the systems impulse resposne. The convolution theorem translates this operationn to the frequncy domain.
-The first part of the report describes the filtering of a delicious chocolate cake through a infinite impulse response (IIR) filter, resulting in another declicious vanilla cake. The second part describes a running beer filter as a prototype for finite impulse response (FIR) filters. The characterization of the filter is described, along with the results of some arbitrary test signals.
-The results show that you can also have fun at later stages of your academic career, and that it is actually tough to condense the information to its essentials when you only have 4 pages to fill including pictures.
+\subsection{Like a hot knife through a Butterworth}
+% Erik
+% Jakob
+The purpose of this exercise was to construct a bandpass filter which met a set of requirements. These requirements were:
+\begin{itemize}
+\item Passband from 0.2 to 0.3
+\item Stopbands from 0 to 0.1 and 0.4 to 1
+\item Ripples are OK if they don't exceed 2 dB
+\item The stopband attenuation should be at least -100 dB
+\end{itemize}
 
-\section{Methods}
-Describe your methods here. Describe how you tackle the problem and why you think it is a good idea to do it exactly this way. Avoid lengthy repetition of the content of the book and restrict yourself to the most essentual information. Provide all the information required to reproduce your results one to one.
+It was decided to make a Butterworth bandpass filter. MATLAB has a built-in function called 'butter' which returns the transfer function of a Butterworth filter of the specified type, order and cutoff frequency. 
+\newline
+The requirements meant that we constructed a bandpass Butterworth filter using a higher and lower cutoff frequency of 0.2 and 0.3 respectively. The order was determined by testing the function with different values, and choosing the lowest order where the stopband attenuation was at least -100 dB. The resulting magnitude and phase response of the 12th order Butterworth bandpass filter can be seen in figure \ref{fig:butterband}.
 
-The optimal number of bicycles to have is given by eq. \ref{eq:bikes}
-\begin{equation}\label{eq:bikes}
- N_b = n + 1 \qquad \mbox{constrained by:} \ \ N_b < s
-\end{equation}
-
-where $N_b$ refers to the optimal number of bicycles, $n$ to the number of bicycles you have at the moment, and $s$ the number of bicycles where your spouse will kick you out.
-
-
-\subsection{Figures}
-Prepare your figures such that they fit in width within one column, that the lines are visible and that all fonts are readable. As a guideline, the font size in the figures should be at least the size of the running text. Reduce the number of figures to a minimum. If you have a lot of information, provide panels and label each panel with a capital letter in the top left corner (i.e., A, B, C, ...). Refer to all figures in the running text.  
-
-\subsection{Figure captions}
-Please provide figure captions where you describe the main contents of the corresponding figure. This might look as in figure \ref{fig:eyes}:
-\begin{figure}
- \includegraphics[width=\columnwidth]{eyes}
- \caption{These are eyes of some insect species. There are two of them, located on the left and on the right hand side. They look weird - and they will observe you if you do not follow the rules.}
- \label{fig:eyes}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=\linewidth]{assignment_02/plots/butterbandfreq.png}
+    \caption{Frequency and phase response of a Butterworth bandpass filter that lives up to the given specifications.}
+    \label{fig:butterband}
 \end{figure}
 
+The next task was to compute and plot the impulse response (figure xx) and the pole-zero plot in the z-plane (figure xx). 
+% insert impulse response and pole-zero plot
 
-\section{Results}
-Describe the results you obtained. Make sure you mention all the correct points and refer to the figures you produced.
-
-\section{Discussion}
-Provide some more general comments putting the specific points you found out in the single parts into a bigger context and how they connect to the rest of the conbtants of the course.
+Using the computed impulse response, we were asked to find the effective length of the impulse response, which is the length (in samples) at which the impulse response decays below 10\% of its maximum. 
 
 
+\subsection{Shorter and shorter}
+% Steffan
+For this exercise we were tasked with designing an \textit{ideal} FIR lowpass filter based on the following specifications: 
+\begin{itemize}
+    \item Pass-band from 0 to 5 kHz with gain of 0 dB. 
+    \item Cut-off frequency at one-third the normalized frequency. 
+    \item Impulse response is 601 samples long. 
+\end{itemize}
+From these specifications we can argue that the sampling frequency should be 30 kHz, as the Nyquist frequency would then be 15 kHz, which would correspond to three times the cut-off frequency of 5 kHz. A two-sided frequency response of the filter is shown in Figure \_. 
 
+\section{An equalizer - without buttons}
+
+\subsection{Bass and treble}
+% Tjark
 
 \end{document}
 
