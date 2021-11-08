@@ -67,7 +67,7 @@ For this exercise we were tasked with designing an \textit{ideal} FIR lowpass fi
     \item Cut-off frequency at one-third the normalized frequency. 
     \item Impulse response is 601 samples long. 
 \end{itemize}
-From these specifications we can argue that the sampling frequency should be 30 kHz, as the Nyquist frequency would then be 15 kHz, which would correspond to three times the cut-off frequency of 5 kHz. A two-sided frequency response of the filter is shown in Figure \_. 
+From these specifications we can argue that the sampling frequency should be 30 kHz, as the Nyquist frequency would then be 15 kHz, which would correspond to three times the cut-off frequency of 5 kHz. A frequency response of the proposed filter is shown in Figure \_. 
 
 \begin{figure}
     \centering
@@ -75,11 +75,46 @@ From these specifications we can argue that the sampling frequency should be 30 
     \caption{Frequency response of the idealized low-pass filter.}
     \label{fig:freq_resp_lowpass}
 \end{figure}
-\section{An equalizer - without buttons}
 
+
+\newpage
+
+\section{An equalizer - without buttons}
 \subsection{Bass and treble}
 % Tjark
 
+One application of FIR filters lies in the domain of digital audio processing where the finite nature of the filter response corresponds to a known and limit number of computations per output sample which is impossible to have when using an IIR filter. In the following section, the use of an FIR band-pass filter as an equalizer is investigated. The filter will be obtained using the frequency domain equivalence method for FIR filters.
+
+The band-pass filter used as an equalizer can be characterized by four parameters: the two normalized cut-off frequencies contained in the set $\omega_c$, the pass-band gain $G_p$ and the IR length $L$. Here the term \textit{pass-band gain} should not be taken strictly, since a negative pass-band gain is a legal parameter.
+
+Using this set of parameters, an ideal band-pass filter can be constructed in the frequency domain. For this all frequencies outside of the pass-band are set to 0 dB while all frequencies inside of the pass-band itself are set to $G_p$. An example of an obtained ideal frequency response is shown in Fig. \ref{fig:eq}.
+
+The frequency response is then sampled to obtain a discrete spectrum which in turn is transferred to the time domain using the inverse Fourier transform. Since the spectrum resembles a $rect$ function, the resulting impulse response $h$ in the time domain is a $sinc$ function. The IR is periodic due to the periodicity of a digital spectrum. We consider one period which has the peak of the $sinc$ function centered at $n=0$. This IR is not causal since it starts to rise before $n=0$. In order to make it causal, the IR is shifted by half a period in time. The result can be seen in Fig. \ref{fig:eq_ir}. 
+
+It can be observed, that the IR is close to zero for a large part of one period. We can therefore shorten the IR using windowing and thus get a computationally less demanding filter without compromising the frequency response significantly. For this, a Hamming window $w$ is used which can be seen in Fig. \ref{fig:eq_ir}. The window is centered around the $sinc$ function's peak. The resulting IR $h_w$, where the window has been applied, is shown at the bottom of Fig. \ref{fig:eq_ir}.
+
+For a FIR filter, $a_0 = 1$ and the $b$ coefficients are equal to the IR itself. We thus can find our final equalizer filter coefficients in the windowed impulse response $h_w$. The spectrum of the resulting filter can be compared to the ideal starting point in Fig. \ref{fig:eq}. Due to windowing, we have introduced some oscillations and a generally wider transition band around the cut-off frequencies. The most distinctive feature though is the phase response. By making our IR causal, a phase delay had to be introduced for certain frequencies. Since our IR is finite and point symmetric, the phase response is linear nevertheless, which makes it distortion free. This of course is a requirement for any audio application. 
+
+The accompanying Matlab live script makes it possible to apply the filter to music and use it as an equalizer. The resulting audio shows the expected behavior when for instance low frequencies are blocked or amplified. 
+
+To make the equalizer control more interactive, a block processing implementation was attempted using a combination of the \texttt{sound} and \texttt{pause} as well as the stop watch functions in Matlab. Since the impulse response can be kept very short, there is only very little overlap between two blocks and the overlap was therefore ignored. The whole goal of the implementation though, to make the equalizer more interactive, was defeated by the fact that Matlab's execution engine does not recognize changes in the script variables during execution.
+
+To conclude, the FIR filter approximation of an ideal band-pass filter using the frequency domain equivalence method for FIR filters seems to yield very satisfactory results while keeping the computational cost at a minimum. It seems therefore especially suitable for real time audio processing applications.
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{assignment_02/plots/equalizer.pdf}
+    \caption{The frequency response for the ideal and final equalizer filter using the cut-off frequencies $\omega_c=\{0.2,0.6\}$, a pass-band gain of $G_p=-27$ dB and a filter length of $L=260$.}
+    \label{fig:eq}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{assignment_02/plots/equalizer_ir.pdf}
+    \caption{(top) The impulse response $h(n)$ for the ideal band-pass filter and a Hamming window $w(n)$ cutting of 50\% of the IR. (bottom) The impulse response for the final equalizer filter. Both use cut-off frequencies of $\omega_c=\{0.2,0.6\}$, pass-band gains of $G_p=-27$ dB and filter lengths of $L=260$.}
+    \label{fig:eq_ir}
+\end{figure}
 \end{document}
 
 
