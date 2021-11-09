@@ -67,7 +67,7 @@ For this exercise we were tasked with designing an \textit{ideal} FIR lowpass fi
     \item Cut-off frequency at one-third the normalized frequency. 
     \item Impulse response is 601 samples long. 
 \end{itemize}
-From these specifications we can argue that the sampling frequency should be 30 kHz, as the Nyquist frequency would then be 15 kHz, which would correspond to three times the cut-off frequency of 5 kHz. A frequency response of the proposed filter is shown in Figure \ref{fig:freq_resp_lowpass}. We see that the idealized filter has an infinitely steep roll-off at the break frequency and also zero phase shift, meaning no time delays. Applying the inverse Fourier transform yields the time-domain impulse response shown in Figure \ref{fig:imp_resp_lowpass}. The impulse response can be seen to be acausal and periodic centered around 
+From these specifications we can argue that the sampling frequency should be 30 kHz, as the Nyquist frequency would then be 15 kHz, which would correspond to three times the cut-off frequency of 5 kHz. A frequency response of the proposed filter is shown in Figure \ref{fig:freq_resp_lowpass}. We see that the idealized filter has an infinitely steep roll-off at the break frequency and also zero phase shift, meaning no time delays. Applying the inverse Fourier transform yields the time-domain impulse response shown in Figure \ref{fig:imp_resp_lowpass}. The linear phase causes the impulse response to be seen to be acausal 
 
 \begin{figure}
     \centering
@@ -78,12 +78,30 @@ From these specifications we can argue that the sampling frequency should be 30 
 
 \begin{figure}
     \centering
+    \includegraphics{}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+\begin{figure}
+    \centering
     \includegraphics[width=\columnwidth,clip]{assignment_02/plots/impulse_resp_lowpass_fir.pdf}
     \caption{Impulse response of ideal lowpass filter.}
     \label{fig:imp_resp_lowpass}
 \end{figure}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth,clip]{assignment_02/plots/hamming_window_lowpass_fir.pdf}
+    \caption{Windowed impulse response plotted alongside the Hamming window used. }
+    \label{fig:imp_resp_lowpass_window}
+\end{figure}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth,clip]{assignment_02/plots/freq_resp_window_lowpass_fir.pdf}
+    \caption{The frequency response of the windowed filter plotted on top of the original filter.}
+    \label{fig:freq_resp_lowpass_window}
+\end{figure}
 \newpage
 
 \section{An equalizer - without buttons}
