@@ -13,7 +13,9 @@
 \fi
 \usepackage{amsmath}
 \usepackage{siunitx}
+\usepackage{nth}
 \usepackage{geometry}
+\usepackage{courier}
 \usepackage{comment}
 \usepackage{float}
 \usepackage[caption=false]{subfig}
@@ -23,7 +25,7 @@
 \begin{document}
 \newgeometry{top=12mm, bottom=12mm, left=12mm, right=12mm}
 \title{22051 - Assignment number 2}
-\author{\vspace{-2mm}{\normalsize \underline{Group 3} - s194048 Erik Rame (\_ hrs), s194051 Jakob Bernhardt (\_ hrs), s194006 Steffan Kunoy (4 hrs), \\s186083 Tjark Petersen (\_ hrs)}\vspace{-10mm}}
+\author{\vspace{-2mm}{\normalsize \underline{Group 3} - s194048 Erik Rame (9 hrs), s194051 Jakob Bernhardt (4 hrs), s194006 Steffan Kunoy (4 hrs), \\s186083 Tjark Petersen (5 hrs)}\vspace{-10mm}}
 
 % make the title area
 \maketitle
@@ -36,15 +38,15 @@
 % Jakob
 The purpose of this exercise was to construct a bandpass filter which met a set of requirements. These requirements were:
 \begin{itemize}
-\item Passband from 0.2 to 0.3
-\item Stopbands from 0 to 0.1 and 0.4 to 1
+\item Passband from 0.2 to 0.3 on the normalized frequency axis
+\item Stopbands from 0 to 0.1 and 0.4 to 1 on the normalized axis
 \item Ripples are OK if they don't exceed 2 dB
 \item The stopband attenuation should be at least -100 dB
 \end{itemize}
 
-It was decided to make a Butterworth bandpass filter. MATLAB has a built-in function called 'butter' which returns the transfer function of a Butterworth filter of the specified type, order and cutoff frequency. 
-\newline
-The requirements meant that we constructed a bandpass Butterworth filter using a higher and lower cutoff frequency of 0.2 and 0.3 respectively. The order was determined by testing the function with different values, and choosing the lowest order where the stopband attenuation was at least -100 dB. The resulting magnitude and phase response of the 12th order Butterworth bandpass filter can be seen in figure \ref{fig:butterband}.
+It was decided to make a Butterworth bandpass filter. MATLAB has a built-in function called \texttt{butter} which returns the coefficients of a normalized Butterworth filter of the specified type, order and cutoff frequency. 
+
+The requirements meant that we constructed a bandpass Butterworth filter using a higher and lower cutoff frequency of 0.2 and 0.3 respectively. The order was determined by testing the function with different values, and choosing the lowest order where the stopband attenuation was at least -100 dB. The resulting magnitude and phase response of the \nth{12} order Butterworth bandpass filter can be seen in Figure \ref{fig:butterband}. We see that the filter's corner frequencies are located at the 0.2 and 0.3 on the normalized frequency axis and that the stopband attenuation is well below -100 dB. 
 
 \begin{figure} [H]
     \centering
@@ -53,9 +55,7 @@ The requirements meant that we constructed a bandpass Butterworth filter using a
     \label{fig:butterband}
 \end{figure}
 
-From the frequency response, we can see the corner frequencies are about 0.2 and 0.3.
-
-The next task was to compute and plot the impulse response and the pole-zero plot of the filter, which can be seen in figure \ref{fig:butterbandimp} and \ref{fig:butterbandpz}:
+The next task was to compute and plot the impulse response and the pole-zero plot of the filter, which can be seen in Figures \ref{fig:butterbandimp} and \ref{fig:butterbandpz}.
 
 \begin{figure} [H]
     \centering
@@ -71,8 +71,27 @@ The next task was to compute and plot the impulse response and the pole-zero plo
     \label{fig:butterbandpz}
 \end{figure}
 
-Using the computed impulse response, we were asked to find the effective length of the impulse response, which is the length (in samples) at which the impulse response decays below 10\% of its maximum. This was done in practice by ...
-Using the computed impulse response, we were asked to find the effective length of the impulse response, which is the length (in samples) at which the impulse response decays below 10\% of its maximum. This was done in practice by ...
+Using the computed impulse response, we were asked to find the effective length of the impulse response, which is the length (in samples) at which the impulse response decays below 10\% of its maximum. This was done in practice by finding the last point when the magnitude of the impulse response is over 10\%, and this occurs at the 126th sample. 
+
+After having found the effective length (126) of the impulse response, it was cut to various lengths of its effective length using rectangular and Hann-windowing. These were the acquired frequency responses of this variation:
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=\linewidth]{assignment_02/plots/1.1_BW_FreqRes_RectWin.png}
+    \caption{Frequency response of our Butterworth bandpass filter, cut using rectangular windowing.}
+    \label{fig:rectwindfr}
+\end{figure}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=\linewidth]{assignment_02/plots/1.1_BW_FreqRes_HannWin.png}
+    \caption{Frequency response of our Butterworth bandpass filter, cut using Hann-windowing.}
+    \label{fig:hannwindfr}
+\end{figure}
+
+We can see that our frequency response of our filter becomes less and less desirable the more it is cut, as more of our specified characteristics are violated. This is to be expected, as by windowing we are excluding a portion of the information that dictates how the frequency response will look. In both cases, the gain margin specification is immediately violated, though the case of the rectangular window is worse, as the attenuation outside of the passband is comparatively very small. 
+
+The variation between responses in the case of the Hann-windowed cut is significantly greater than that of the rectangular cut, though as they both approach a smaller and smaller portion of the original impulse response, the eventual response becomes increasingly similar. Additionally, The Hann-window causes a much smoother roll-off in attenuation than the rectangular window. Finally, a non-linear phase shift can be observed in both windowed cases.
 
 \subsection{Shorter and shorter}
 For this exercise we were tasked with designing an \textit{ideal} FIR lowpass filter based on the following specifications: 
@@ -109,10 +128,10 @@ We observe that the magnitude response of the windowed filter has a more gradual
 \subsection{Bass and treble}
 % Tjark
 
-One application of FIR filters lies in the domain of digital audio processing where the finite nature of the filter response corresponds to a known and limit number of computations per output sample which is impossible to have when using an IIR filter. In the following section, the use of an FIR band-pass filter as an equalizer is investigated. The filter will be obtained using the frequency domain equivalence method for FIR filters.
-
-The bandpass filter used as an equalizer can be characterized by four parameters: the two normalized cut-off frequencies contained in the set $\omega_c$, the pass-band gain $G_p$ and the IR length $L$. Here the term \textit{pass-band gain} should not be taken strictly, since a negative pass-band gain is a legal parameter.
-
+One application of FIR filters lies in the domain of digital audio processing where the finite nature of the filter response corresponds to a known and limit number of computations per output sample which is impossible to have when using an IIR filter. In the following section, the use of an FIR band-pass filter as an equalizer is investigated. The filter will be obtained using the frequency domain equivalence method for FIR filters. \\
+\newline
+The bandpass filter used as an equalizer can be characterized by four parameters: the two normalized cut-off frequencies contained in the set $\omega_c$, the pass-band gain $G_p$ and the IR length $L$. Here the term \textit{pass-band gain} should not be taken strictly, since a negative pass-band gain is a legal parameter. \\
+\newline
 Using this set of parameters, an ideal bandpass filter can be constructed in the frequency domain. For this all frequencies outside of the pass-band are set to 0 dB while all frequencies inside of the pass-band itself are set to $G_p$. An example of an obtained ideal frequency response is shown in Fig. \ref{fig:eq}.
 
 \begin{figure}
@@ -128,21 +147,16 @@ Using this set of parameters, an ideal bandpass filter can be constructed in the
     \label{fig:eq_ir}
 \end{figure}
 
-The frequency response is then sampled to obtain a discrete spectrum which in turn is transferred to the time domain using the inverse Fourier transform. Since the spectrum resembles a $rect$ function, the resulting impulse response $h$ in the time domain is a $sinc$ function. The IR is periodic due to the periodicity of a digital spectrum. We consider one period which has the peak of the $sinc$ function centered at $n=0$. This IR is not causal since it starts to rise before $n=0$. In order to make it causal, the IR is shifted by half a period in time. The result can be seen in Fig. \ref{fig:eq_ir}. 
-
-It can be observed, that the IR is close to zero for a large part of one period. We can therefore shorten the IR using windowing and thus get a computationally less demanding filter without compromising the frequency response significantly. For this, a Hamming window $w$ is used which can be seen in Fig. \ref{fig:eq_ir}. The window is centered around the $sinc$ function's peak. The resulting IR $h_w$, where the window has been applied, is shown at the bottom of Fig. \ref{fig:eq_ir}.
-
-For an FIR filter, $a = \{1\}$ while the $b$ coefficients are equal to the IR itself. We can thus find our final equalizer filter coefficients in the windowed impulse response $h_w$. The spectrum of the resulting filter can be compared to the ideal starting point in Fig. \ref{fig:eq}. Due to windowing, we have introduced some oscillations and a generally wider transition band around the cut-off frequencies. The most distinctive feature though is the phase response. By making our IR causal, a phase delay had to be introduced for certain frequencies. Since our IR is finite and point symmetric, the phase response is linear nevertheless, which makes it phase distortion free. This of course is a requirement for any audio application. 
-
-The accompanying Matlab live script makes it possible to apply the filter to music and use it as a basic equalizer. The resulting audio shows the expected behavior when for instance low frequencies are blocked or amplified. 
-
-To make the equalizer control more interactive, a block processing implementation was attempted using a combination of the \texttt{sound} and \texttt{pause} as well as the stopwatch functions in Matlab. Since the impulse response can be kept very short, there is only very little overlap between two blocks and the overlap was therefore ignored. The whole goal of the implementation though, to make the equalizer more interactive, was defeated by the fact that Matlab's execution engine does not recognize changes in the script variables during execution.
-
+The frequency response is then sampled to obtain a discrete spectrum which in turn is transferred to the time domain using the inverse Fourier transform. Since the spectrum resembles a $rect$ function, the resulting impulse response $h$ in the time domain is a $sinc$ function. The IR is periodic due to the periodicity of a digital spectrum. We consider one period which has the peak of the $sinc$ function centered at $n=0$. This IR is not causal since it starts to rise before $n=0$. In order to make it causal, the IR is shifted by half a period in time. The result can be seen in Figure \ref{fig:eq_ir}. \\
+\newline
+It can be observed, that the IR is close to zero for a large part of one period. We can therefore shorten the IR using windowing and thus get a computationally less demanding filter without compromising the frequency response significantly. For this, a Hamming window $w$ is used which can be seen in Fig. \ref{fig:eq_ir}. The window is centered around the $sinc$ function's peak. The resulting IR $h_w$, where the window has been applied, is shown at the bottom of Figure \ref{fig:eq_ir}.\\
+\newline
+For an FIR filter, $a = \{1\}$ while the $b$ coefficients are equal to the IR itself. We can thus find our final equalizer filter coefficients in the windowed impulse response $h_w$. The spectrum of the resulting filter can be compared to the ideal starting point in Figure \ref{fig:eq}. Due to windowing, we have introduced some oscillations and a generally wider transition band around the cut-off frequencies. The most distinctive feature though is the phase response. By making our IR causal, a phase delay had to be introduced for certain frequencies. Since our IR is finite and point symmetric, the phase response is linear nevertheless, which makes it phase distortion free. This of course is a requirement for any audio application. \\
+\newline
+The accompanying Matlab live script makes it possible to apply the filter to some piece of music and use it as a basic equalizer. The resulting audio shows the expected behavior when for instance low frequencies are blocked or amplified. \\
+\newline
+To make the equalizer control more interactive, a block processing implementation was attempted using a combination of the \texttt{sound} and \texttt{pause} as well as the stopwatch functions in Matlab. Since the impulse response can be kept very short, there is only very little overlap between two blocks and the overlap was therefore ignored. The whole goal of the implementation though, to make the equalizer more interactive, was defeated by the fact that Matlab's execution engine does not recognize changes in the script variables during execution. \\
+\newline
 To conclude, the FIR filter approximation of an ideal band-pass filter using the frequency domain equivalence method for FIR filters seems to yield very satisfactory results while keeping the computational cost at a minimum. It seems therefore especially suitable for real time audio processing applications.
 
-
-
-
 \end{document}
-
-
