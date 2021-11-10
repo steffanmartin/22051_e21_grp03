@@ -23,7 +23,7 @@
 \begin{document}
 \newgeometry{top=12mm, bottom=12mm, left=12mm, right=12mm}
 \title{22051 - Assignment number 2}
-\author{\vspace{-2mm}{\normalsize \underline{Group 3} - s194048 Erik Rame (\_ hrs), s194051 Jakob Bernhardt (\_ hrs), s194006 Steffan Kunoy (\_ hrs), \\s186083 Tjark Petersen (\_ hrs)}\vspace{-10mm}}
+\author{\vspace{-2mm}{\normalsize \underline{Group 3} - s194048 Erik Rame (\_ hrs), s194051 Jakob Bernhardt (\_ hrs), s194006 Steffan Kunoy (4 hrs), \\s186083 Tjark Petersen (\_ hrs)}\vspace{-10mm}}
 
 % make the title area
 \maketitle
@@ -53,55 +53,56 @@ The requirements meant that we constructed a bandpass Butterworth filter using a
     \label{fig:butterband}
 \end{figure}
 
-The next task was to compute and plot the impulse response (figure xx) and the pole-zero plot in the z-plane (figure xx). 
-% insert impulse response and pole-zero plot
+From the frequency response, we can see the corner frequencies are about 0.2 and 0.3.
+
+The next task was to compute and plot the impulse response and the pole-zero plot of the filter, which can be seen in figure \ref{fig:butterbandimp} and \ref{fig:butterbandpz}:
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=\linewidth]{assignment_02/plots/1.1_BW_ImpRes.png}
+    \caption{Impulse response of a Butterworth bandpass filter that lives up to the given specifications.}
+    \label{fig:butterbandimp}
+\end{figure}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=\linewidth]{assignment_02/plots/1.1_BW_PZPlot.png}
+    \caption{Pole-Zero plot of a Butterworth bandpass filter that lives up to the given specifications.}
+    \label{fig:butterbandpz}
+\end{figure}
 
 Using the computed impulse response, we were asked to find the effective length of the impulse response, which is the length (in samples) at which the impulse response decays below 10\% of its maximum. This was done in practice by ...
 Using the computed impulse response, we were asked to find the effective length of the impulse response, which is the length (in samples) at which the impulse response decays below 10\% of its maximum. This was done in practice by ...
 
 \subsection{Shorter and shorter}
-% Steffan
 For this exercise we were tasked with designing an \textit{ideal} FIR lowpass filter based on the following specifications: 
 \begin{itemize}
     \item Pass-band from 0 to 5 kHz with gain of 0 dB. 
     \item Cut-off frequency at one-third the normalized frequency. 
     \item Impulse response is 601 samples long. 
 \end{itemize}
-From these specifications we can argue that the sampling frequency should be 30 kHz, as the Nyquist frequency would then be 15 kHz, which would correspond to three times the cut-off frequency of 5 kHz. A frequency response of the proposed filter is shown in Figure \ref{fig:freq_resp_lowpass}. We see that the idealized filter has an infinitely steep roll-off at the break frequency and also zero phase shift, meaning no time delays. Applying the inverse Fourier transform yields the time-domain impulse response shown in Figure \ref{fig:imp_resp_lowpass}. The linear phase causes the impulse response to be seen to be acausal 
-
-\begin{figure}
+From these specifications we can argue that the sampling frequency should be 30 kHz, as the Nyquist frequency would then be 15 kHz, which would correspond to three times the cut-off frequency of 5 kHz. A frequency response of the proposed filter is shown in Figure \ref{fig:freq_resp_lowpass}. We see that the idealized filter has an infinitely steep roll-off at the break frequency and also zero phase shift, meaning no time delays. 
+\begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth,clip]{assignment_02/plots/freq_resp_lowpass_fir.pdf}
     \caption{Frequency response of the idealized low-pass filter.}
     \label{fig:freq_resp_lowpass}
 \end{figure}
-
-\begin{figure}
+Applying the inverse Fourier transform yields the time-domain impulse response. Due to the linear phase shift the IR is acausal, periodic and centered around zero. To mitigate this we time shift the IR and cut it to 50\% of its length (301 samples) using a Hamming window, as shown in Figure \ref{fig:imp_resp_lowpass}. 
+\begin{figure}[H]
     \centering
-    \includegraphics{}
-    \caption{Caption}
-    \label{fig:my_label}
-\end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=\columnwidth,clip]{assignment_02/plots/impulse_resp_lowpass_fir.pdf}
-    \caption{Impulse response of ideal lowpass filter.}
+    \includegraphics[width=\columnwidth]{assignment_02/plots/impulse_resp_lowpass_fir_window.pdf}
+    \caption{Impulse response plotted alongside the Hamming window (top). Windowed impulse response (bottom).}
     \label{fig:imp_resp_lowpass}
 \end{figure}
-
-\begin{figure}
+Taking the forward transform of the shortened IR gives us the frequency response of the windowed filter, which can be seen plotted alongside the original lowpass filter in Figure \ref{fig:freq_resp_lowpass_window}. It is seen that the frequency responses of the two filters vary greatly, even though the differences in their impulse responses in Figure \ref{fig:imp_resp_lowpass} were minimal. 
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\columnwidth,clip]{assignment_02/plots/hamming_window_lowpass_fir.pdf}
-    \caption{Windowed impulse response plotted alongside the Hamming window used. }
-    \label{fig:imp_resp_lowpass_window}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\columnwidth,clip]{assignment_02/plots/freq_resp_window_lowpass_fir.pdf}
+    \includegraphics[width=\columnwidth,clip]{assignment_02/plots/freq_resp_lowpass_fir_window.pdf}
     \caption{The frequency response of the windowed filter plotted on top of the original filter.}
     \label{fig:freq_resp_lowpass_window}
 \end{figure}
+We observe that the magnitude response of the windowed filter has a more gradual roll-off at the break frequency as well as a lower attenuation in the passband. In addition, the positive time shift of the IR causes non-linear distortion in the phase response. Thus, the performance of the windowed lowpass FIR filter is objectively worse but more efficient due to its shorter IR. 
 \newpage
 
 \section{An equalizer - without buttons}
