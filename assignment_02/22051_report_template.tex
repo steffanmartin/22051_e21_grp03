@@ -50,7 +50,7 @@ The requirements meant that we constructed a bandpass Butterworth filter using a
 
 \begin{figure} [H]
     \centering
-    \includegraphics[width=\columnwidth]{assignment_02/plots/butterbandfreq.pdf}
+    \includegraphics[width=\linewidth]{assignment_02/plots/butterbandfreq.png}
     \caption{Frequency and phase response of a Butterworth bandpass filter that lives up to the given specifications.}
     \label{fig:butterband}
 \end{figure}
@@ -91,7 +91,7 @@ After having found the effective length (126) of the impulse response, it was cu
 
 We can see that our frequency response of our filter becomes less and less desirable the more it is cut, as more of our specified characteristics are violated. This is to be expected, as by windowing we are excluding a portion of the information that dictates how the frequency response will look. In both cases, the gain margin specification is immediately violated, though the case of the rectangular window is worse, as the attenuation outside of the passband is comparatively very small. 
 
-The variation between responses in the case of the Hann-windowed cut is significantly greater than that of the rectangular cut, though as they both approach a smaller and smaller portion of the original impulse response, the eventual response becomes increasingly similar. Additionally, The Hann-window causes a much smoother roll-off in attenuation than the rectangular window. Finally, a non-linear phase shift can be observed in both windowed cases.
+The variation between responses in the case of the Hann-windowed cut is significantly greater than that of the rectangular cut, though as they both approach a smaller and smaller portion of the original impulse response, the eventual response becomes increasingly similar. Additionally, The Hann-window causes a much smoother roll-off in attenuation than the rectangular window. Finally, a non-linear phase shift can be observed in both cases.
 
 \subsection{Shorter and shorter}
 For this exercise we were tasked with designing an \textit{ideal} FIR lowpass filter based on the following specifications: 
