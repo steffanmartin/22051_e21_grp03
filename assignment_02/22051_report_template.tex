@@ -122,16 +122,16 @@ Taking the forward transform of the shortened IR gives us the frequency response
     \label{fig:freq_resp_lowpass_window}
 \end{figure}
 We observe that the magnitude response of the windowed filter has a more gradual roll-off at the break frequency as well as a lower attenuation in the passband. In addition, the positive time shift of the IR causes non-linear distortion in the phase response. Thus, the performance of the windowed lowpass FIR filter is objectively worse but more efficient due to its shorter IR. 
-\newpage
+
 
 \section{An equalizer - without buttons}
 \subsection{Bass and treble}
 % Tjark
 
-One application of FIR filters lies in the domain of digital audio processing where the finite nature of the filter response corresponds to a known and limit number of computations per output sample which is impossible to have when using an IIR filter. In the following section, the use of an FIR band-pass filter as an equalizer is investigated. The filter will be obtained using the frequency domain equivalence method for FIR filters. \\
-\newline
-The bandpass filter used as an equalizer can be characterized by four parameters: the two normalized cut-off frequencies contained in the set $\omega_c$, the pass-band gain $G_p$ and the IR length $L$. Here the term \textit{pass-band gain} should not be taken strictly, since a negative pass-band gain is a legal parameter. \\
-\newline
+One application of FIR filters lies in the domain of digital audio processing where the finite nature of the filter response corresponds to a known and limit number of computations per output sample which is impossible to have when using an IIR filter. In the following section, the use of an FIR band-pass filter as an equalizer is investigated. The filter will be obtained using the frequency domain equivalence method for FIR filters. 
+
+The bandpass filter used as an equalizer can be characterized by four parameters: the two normalized cut-off frequencies contained in the set $\omega_c$, the pass-band gain $G_p$ and the IR length $L$. Here the term \textit{pass-band gain} should not be taken strictly, since a negative pass-band gain is a legal parameter. 
+
 Using this set of parameters, an ideal bandpass filter can be constructed in the frequency domain. For this all frequencies outside of the pass-band are set to 0 dB while all frequencies inside of the pass-band itself are set to $G_p$. An example of an obtained ideal frequency response is shown in Fig. \ref{fig:eq}.
 
 \begin{figure}
@@ -147,16 +147,18 @@ Using this set of parameters, an ideal bandpass filter can be constructed in the
     \label{fig:eq_ir}
 \end{figure}
 
-The frequency response is then sampled to obtain a discrete spectrum which in turn is transferred to the time domain using the inverse Fourier transform. Since the spectrum resembles a $rect$ function, the resulting impulse response $h$ in the time domain is a $sinc$ function. The IR is periodic due to the periodicity of a digital spectrum. We consider one period which has the peak of the $sinc$ function centered at $n=0$. This IR is not causal since it starts to rise before $n=0$. In order to make it causal, the IR is shifted by half a period in time. The result can be seen in Figure \ref{fig:eq_ir}. \\
-\newline
-It can be observed, that the IR is close to zero for a large part of one period. We can therefore shorten the IR using windowing and thus get a computationally less demanding filter without compromising the frequency response significantly. For this, a Hamming window $w$ is used which can be seen in Fig. \ref{fig:eq_ir}. The window is centered around the $sinc$ function's peak. The resulting IR $h_w$, where the window has been applied, is shown at the bottom of Figure \ref{fig:eq_ir}.\\
-\newline
-For an FIR filter, $a = \{1\}$ while the $b$ coefficients are equal to the IR itself. We can thus find our final equalizer filter coefficients in the windowed impulse response $h_w$. The spectrum of the resulting filter can be compared to the ideal starting point in Figure \ref{fig:eq}. Due to windowing, we have introduced some oscillations and a generally wider transition band around the cut-off frequencies. The most distinctive feature though is the phase response. By making our IR causal, a phase delay had to be introduced for certain frequencies. Since our IR is finite and point symmetric, the phase response is linear nevertheless, which makes it phase distortion free. This of course is a requirement for any audio application. \\
-\newline
-The accompanying Matlab live script makes it possible to apply the filter to some piece of music and use it as a basic equalizer. The resulting audio shows the expected behavior when for instance low frequencies are blocked or amplified. \\
-\newline
-To make the equalizer control more interactive, a block processing implementation was attempted using a combination of the \texttt{sound} and \texttt{pause} as well as the stopwatch functions in Matlab. Since the impulse response can be kept very short, there is only very little overlap between two blocks and the overlap was therefore ignored. The whole goal of the implementation though, to make the equalizer more interactive, was defeated by the fact that Matlab's execution engine does not recognize changes in the script variables during execution. \\
-\newline
+The frequency response is then sampled to obtain a discrete spectrum which in turn is transferred to the time domain using the inverse Fourier transform. Since the spectrum resembles a $rect$ function, the resulting impulse response $h$ in the time domain is a $sinc$ function. The IR is periodic due to the periodicity of a digital spectrum. We consider one period which has the peak of the $sinc$ function centered at $n=0$. This IR is not causal since it starts to rise before $n=0$. In order to make it causal, the IR is shifted by half a period in time. The result can be seen in Figure \ref{fig:eq_ir}. 
+
+It can be observed, that the IR is close to zero for a large part of one period. We can therefore shorten the IR using windowing and thus get a computationally less demanding filter without compromising the frequency response significantly. For this, a Hamming window $w$ is used which can be seen in Fig. \ref{fig:eq_ir}. The window is centered around the $sinc$ function's peak. The resulting IR $h_w$, where the window has been applied, is shown at the bottom of Figure \ref{fig:eq_ir}.
+
+For an FIR filter, $a = \{1\}$ while the $b$ coefficients are equal to the IR itself. We can thus find our final equalizer filter coefficients in the windowed impulse response $h_w$. The spectrum of the resulting filter can be compared to the ideal starting point in Figure \ref{fig:eq}. Due to windowing, we have introduced some oscillations and a generally wider transition band around the cut-off frequencies. The most distinctive feature though is the phase response. By making our IR causal, a phase delay had to be introduced for certain frequencies. Since our IR is finite and point symmetric, the phase response is linear nevertheless, which makes it phase distortion free. This of course is a requirement for any audio application. 
+
+The accompanying Matlab live script makes it possible to apply the filter to some piece of music and use it as a basic equalizer. The resulting audio shows the expected behavior when for instance low frequencies are blocked or amplified. 
+
+To make the equalizer control more interactive, a block processing implementation was attempted using a combination of the \texttt{sound} and \texttt{pause} as well as the stopwatch functions in Matlab. Since the impulse response can be kept very short, there is only very little overlap between two blocks and the overlap was therefore ignored. The whole goal of the implementation though, to make the equalizer more interactive, was defeated by the fact that Matlab's execution engine does not recognize changes in the script variables during execution. 
+
 To conclude, the FIR filter approximation of an ideal band-pass filter using the frequency domain equivalence method for FIR filters seems to yield very satisfactory results while keeping the computational cost at a minimum. It seems therefore especially suitable for real time audio processing applications.
+
+
 
 \end{document}
